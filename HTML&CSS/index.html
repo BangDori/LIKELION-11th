@@ -4,55 +4,53 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="styles/index.css" />
     <title>LIKELION YU 11th</title>
   </head>
   <body>
     <div class="root">
-      <div class="container">
-        <div class="intro-container">
-          <div class="intro-inner">
-            <div class="intro-title">
-              <img
-                class="likelion_logo"
-                src="likelion.png"
-                alt="LIKE LION Logo"
-              />
-              <br />
-              <div class="likelion_title">Like LION</div>
-            </div>
-            <div class="intro-desc">
-              우리는 '성장 의지를 가진 사람들을 돕기 위해' 존재합니다. 그리고
-              이들을 돕기 위한 가장 근본적이고 효과적인 방법은 교육이라고
-              생각합니다.
+      <header class="intro-title">
+        <img
+          class="likelion_logo"
+          src="assets/likelion.png"
+          alt="LIKE LION Logo"
+        />
+        <br />
+        <h1 class="likelion_title">Like LION</h1>
+      </header>
 
-              <div class="intro-summary">지금 바로 지원하세요!</div>
-            </div>
-            <div class="intro-track">
-              <div class="track">Plan <br />&<br />Design</div>
-              <div class="track">Frontend</div>
-              <div class="track">Backend</div>
-            </div>
+      <main class="container">
+        <section class="intro-container">
+          <p class="intro-desc">
+            우리는 '성장 의지를 가진 사람들을 돕기 위해' 존재합니다. 그리고
+            이들을 돕기 위한 가장 근본적이고 효과적인 방법은 교육이라고
+            생각합니다.
+          </p>
+          <p class="intro-summary">지금 바로 지원하세요!</p>
+          <div class="intro-track">
+            <div class="track">Plan <br />&<br />Design</div>
+            <div class="track">Frontend</div>
+            <div class="track">Backend</div>
           </div>
-        </div>
-        <div class="login-container">
+        </section>
+        <section class="login-container">
           <div class="login-inner">
-            <div class="login-title">LOGIN</div>
+            <h2 class="login-title">LOGIN</h2>
             <form class="login-form" method="" action="">
               <div class="login-input">
-                <img id="login_user" src="user.png" alt="login_user" />
+                <img id="login_user" src="assets/user.png" alt="login_user" />
                 <input class="input_field" placeholder="ID" />
               </div>
               <div class="login-input">
-                <img id="login_lock" src="lock.png" alt="login_lock" />
+                <img id="login_lock" src="assets/lock.png" alt="login_lock" />
                 <input type="password" class="input_field" placeholder="PW" />
               </div>
 
               <button class="login_button">로그인 후 지원하기</button>
             </form>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   </body>
 </html>
