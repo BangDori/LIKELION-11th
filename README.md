@@ -8,3 +8,4 @@
 
 ## 활동 내역
 - [HTML&CSS를 활용해서 웹 페이지 제작하기](https://github.com/BangDori/LIKELION-11th/tree/master/HTML%26CSS)
+- [MBTI 테스트 페이지 제작하기](https://github.com/BangDori/LIKELION-11th/tree/master/FE%20Session%201)
