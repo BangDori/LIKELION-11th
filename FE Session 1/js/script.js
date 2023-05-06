@@ -3,8 +3,8 @@ const titleBtn = document.querySelector("#startBtn");
 const questionContainer = document.querySelector(".question-container");
 const question = document.querySelector("#question");
 const type = document.querySelector("#type");
-const aBtn = document.querySelector("#a");
-const bBtn = document.querySelector("#b");
+const yesBtn = document.querySelector("#yesBtn");
+const noBtn = document.querySelector("#noBtn");
 const EI = document.querySelector("#EI");
 const SN = document.querySelector("#SN");
 const TF = document.querySelector("#TF");
@@ -17,7 +17,11 @@ const resultContainer = document.querySelector(".result-container");
 const progressNumber = document.querySelector(".progress-number");
 const resetBtn = document.querySelector("#resetBtn");
 
-const q = {
+const START = "start"; // 시작
+const RESULT = "result"; // 결과
+const RESET = "reset"; // 초기화
+
+const questions = {
   1: {
     title: "모임에서 나의 역할은?",
     type: "EI",
@@ -91,7 +95,7 @@ const q = {
     B: "무계획 무박2일", // P
   },
 };
-const result = {
+const results = {
   ISTJ: { animal: "거북이", img: "turtle.png" },
   ISFJ: { animal: "코뿔소", img: "rhinoceros.png" },
   INFJ: { animal: "팬더", img: "panda.png" },
@@ -110,13 +114,31 @@ const result = {
   ENTJ: { animal: "사자", img: "lion.png" },
 };
 
-let num = 1;
+let questionNum = 1;
 let mbti = "";
 
+const changePage = (move) => {
+  switch (move) {
+    case START:
+      titleContainer.style.display = "none";
+      questionContainer.style.display = "block";
+      break;
+    case RESULT:
+      questionContainer.style.display = "none";
+      resultContainer.style.display = "block";
+      break;
+    case RESET:
+      titleContainer.style.display = "flex";
+      resultContainer.style.display = "none";
+      break;
+    default:
+      break;
+  }
+};
+
 const updateQuestion = () => {
-  if (num === 13) {
-    questionContainer.style.display = "none";
-    resultContainer.style.display = "block";
+  if (questionNum === 13) {
+    changePage(RESULT);
 
     mbti += Number(EI.value) > 2 ? "E" : "I";
     mbti += Number(SN.value) > 2 ? "S" : "N";
@@ -124,30 +146,28 @@ const updateQuestion = () => {
     mbti += Number(JP.value) > 2 ? "J" : "P";
 
     MBTI.textContent = mbti;
-    image.setAttribute("src", `img/${result[mbti].img}`);
-    explain.textContent = `당신의 MBTI는 ${mbti}이며 ${result[mbti].animal}와 유사합니다!`;
+    image.setAttribute("src", `img/${results[mbti].img}`);
+    explain.textContent = `당신의 MBTI는 ${mbti}이며 ${results[mbti].animal}와 유사합니다!`;
 
     return;
   }
 
-  pro.style.width = `calc(100/12 * ${num - 1}%)`;
+  question.textContent = questions[questionNum].title;
+  type.textContent = questions[questionNum].type;
+  yesBtn.textContent = questions[questionNum].A;
+  noBtn.textContent = questions[questionNum].B;
+  pro.style.width = `calc(100/12 * ${questionNum - 1}%)`;
+  progressNumber.textContent = `${questionNum}/12`;
 
-  question.textContent = q[num].title;
-  type.textContent = q[num].type;
-  aBtn.textContent = q[num].A;
-  bBtn.textContent = q[num].B;
-  progressNumber.textContent = `${num}/12`;
-
-  num++;
+  questionNum++;
 };
 
 titleBtn.addEventListener("click", () => {
-  titleContainer.style.display = "none";
-  questionContainer.style.display = "block";
+  changePage(START);
   updateQuestion();
 });
 
-aBtn.addEventListener("click", () => {
+yesBtn.addEventListener("click", () => {
   switch (type.textContent) {
     case "EI":
       EI.value = Number(EI.value) + 1;
@@ -168,17 +188,16 @@ aBtn.addEventListener("click", () => {
   updateQuestion();
 });
 
-bBtn.addEventListener("click", updateQuestion);
+noBtn.addEventListener("click", updateQuestion);
 
 resetBtn.addEventListener("click", () => {
-  num = 1;
+  questionNum = 1;
   mbti = "";
   EI.value = 0;
   SN.value = 0;
   TF.value = 0;
   JP.value = 0;
-  progressNumber.textContent = `${num}/12`;
+  progressNumber.textContent = `${questionNum}/12`;
 
-  titleContainer.style.display = "flex";
-  resultContainer.style.display = "none";
+  changePage(RESET);
 });
