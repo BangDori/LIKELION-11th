@@ -143,6 +143,7 @@ body {
   font-size: 0.9rem;
   width: 80%;
   text-align: center;
+  background: white;
 }
 
 .todo-item.checked .content {
@@ -188,7 +189,7 @@ body {
   position: absolute;
   /* background-color: #F4A442; */
   left: 0;
-  height: 1.5rem;
+  height: 100%;
   width: 100%;
   text-align: center;
 }

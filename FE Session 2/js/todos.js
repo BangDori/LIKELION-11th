@@ -29,12 +29,37 @@ export function createTodo(todo) {
 }
 
 /**
- * Todo 업데이트 함수
- * @param {Number} id 수정할 id
+ * Todo 토글 함수
+ * @param {Number} id 토글 처리할 id
  */
-export function updateTodo(id) {
+export function toggleTodo(id) {
   todos.filter((todo) =>
     todo.id === Number(id) ? (todo.isDone = !todo.isDone) : todo.isDone
+  );
+}
+
+/**
+ * Todo 수정 함수
+ * @param {Number} id 수정할 id
+ * @param {String} text 할 일
+ * @returns
+ */
+export function updateTodo(id, text) {
+  // 유효성 검사
+  if (!validateTodo(text)) {
+    alert("Validation Error");
+    return;
+  }
+
+  // 중복되는 요소가 하나라도 존재하는지 검사
+  const isDuplicate = todos.some((t) => t.text === text && t.id !== Number(id));
+  if (isDuplicate) {
+    alert("Duplication Error");
+    return;
+  }
+
+  todos.filter((todo) =>
+    todo.id === Number(id) ? (todo.text = text) : todo.text
   );
 }
 

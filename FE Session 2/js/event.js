@@ -4,6 +4,7 @@ import {
   deleteTodo,
   deleteAll,
   todos,
+  toggleTodo,
 } from "./todos.js";
 
 const todoList = document.querySelector(".todo-list");
@@ -31,7 +32,7 @@ function clearRendering() {
   leftItems.textContent = `🥕 오늘 할 일이 ${count}개 남았습니다 🥕`;
 }
 
-// TodoList Rendering
+// TodoList 렌더링
 function renderTodoList() {
   todos.forEach((todo) => {
     // 남은 할 일의 수 추가
@@ -50,8 +51,7 @@ function renderTodoList() {
     }
 
     const todoItem = document.createElement("div");
-    // todo가 완료된 상태라면 checked 클래스를 추가
-    todo.isDone
+    todo.isDone // todo가 완료된 상태라면 checked 클래스를 추가
       ? todoItem.setAttribute("class", "todo-item checked")
       : todoItem.setAttribute("class", "todo-item");
     todoItem.setAttribute("id", todo.id);
@@ -60,9 +60,10 @@ function renderTodoList() {
     checkbox.setAttribute("class", "checkbox");
     checkbox.textContent = "✔︎";
 
-    const content = document.createElement("p");
+    const content = document.createElement("input");
     content.setAttribute("class", "content");
-    content.textContent = todo.text;
+    content.setAttribute("value", todo.text);
+    content.disabled = true; // 입력 막기
 
     const delBtn = document.createElement("button");
     delBtn.setAttribute("class", "delBtn");
@@ -78,7 +79,7 @@ function renderTodoList() {
   leftItems.textContent = `🥕 오늘 할 일이 ${count}개 남았습니다 🥕`;
 }
 
-// TodoList reRendering
+// TodoList 렌더링
 function reRenderTodoList() {
   clearRendering();
   renderTodoList();
@@ -107,7 +108,10 @@ function selectButton(param) {
   }
 }
 
+// 이벤트 리스너들을 활성화 시키는 함수
 export function activeEventListener() {
+  todoInput.focus(); // UX 향상
+
   // Create to Enter
   todoInput.addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
@@ -124,16 +128,45 @@ export function activeEventListener() {
     reRenderTodoList();
   });
 
-  // Update & Delete
+  // Update
+  todoList.addEventListener("dblclick", (e) => {
+    if (e.target.className === "content") {
+      const prevText = e.target.value;
+
+      e.target.classList.add("edit-input");
+      e.target.disabled = false;
+      e.target.focus();
+
+      e.target.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          // enter 키를 입력할 경우 검증 후 업데이트
+          updateTodo(e.target.parentElement.id, e.target.value);
+          reRenderTodoList();
+
+          e.target.classList.remove("edit-input");
+          e.target.disabled = true;
+        } else if (e.key === "Escape") {
+          // esc 키를 입력할 경우, 업데이트 정보 제거
+          e.target.classList.remove("edit-input");
+          e.target.disabled = false;
+          e.target.value = prevText;
+          e.target.blur();
+        }
+      });
+    }
+  });
+
+  // Toggle & Delete
   todoList.addEventListener("click", (e) => {
     if (e.target.className === "checkbox") {
-      // Update
-      updateTodo(e.target.parentElement.id);
+      // toggleTodo
+      toggleTodo(e.target.parentElement.id);
+      reRenderTodoList();
     } else if (e.target.className === "delBtn") {
       // Delete
       deleteTodo(e.target.parentElement.id);
+      reRenderTodoList();
     }
-    reRenderTodoList();
   });
 
   // Delete All
