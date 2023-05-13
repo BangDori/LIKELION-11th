@@ -91,6 +91,6 @@ export function deleteAll() {
  * @returns 유효성 검증 여부
  */
 function validateTodo(todo) {
-  if (todo.trim().length == 0) return false;
+  if (todo.trim().length === 0) return false;
   return true;
 }

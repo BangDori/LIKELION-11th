@@ -18,9 +18,19 @@ const clear = document.getElementById("clear");
 
 const ALL = "all"; // all 모드
 const ACTIVE = "acitve"; // ACTIVE 모드
-const COMPLETED = "completed";
+const COMPLETED = "completed"; // COMPLETED 모드
+
 let mode = "all"; // 현재 모드
 let count = 0; // 할일의 개수
+
+// 모드에 따라 변경되는 View
+function filteredTodos() {
+  if (mode === ACTIVE) return todos.map((todo) => (!todo.isDone ? todo : null));
+  else if (mode === COMPLETED)
+    return todos.map((todo) => (todo.isDone ? todo : null));
+
+  return todos; // ALL 모드
+}
 
 // 현재 렌더링되어 있는 TodoList 제거
 function clearRendering() {
@@ -34,21 +44,11 @@ function clearRendering() {
 
 // TodoList 렌더링
 function renderTodoList() {
-  todos.forEach((todo) => {
-    // 남은 할 일의 수 추가
-    if (!todo.isDone) count++;
+  const renderTodos = filteredTodos();
+  const count = todos.filter((todo) => (!todo.isDone ? todo : null)).length;
 
-    // 모드에 따라 변경되는 View
-    switch (mode) {
-      case ACTIVE:
-        if (todo.isDone) return;
-        break;
-      case COMPLETED:
-        if (!todo.isDone) return;
-        break;
-      default:
-        break;
-    }
+  renderTodos.forEach((todo) => {
+    if (!todo) return;
 
     const todoItem = document.createElement("div");
     todo.isDone // todo가 완료된 상태라면 checked 클래스를 추가
