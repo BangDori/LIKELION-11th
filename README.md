@@ -14,3 +14,4 @@
 | [TodoList 페이지 제작하기](https://github.com/BangDori/LIKELION-11th/tree/master/FE%20Session%202) | ✅ | ✅ |
 | [Component 구성](https://github.com/BangDori/LIKELION-11th/tree/master/FE%20Session%203) | ✅ | ✅ |
 | [미니 프로젝트 - 블로그](https://github.com/BangDori/BlogProject-client) | ✅ | ✅ |
+| [Echo SNS (해커톤)](https://github.com/BangDori/Echo-FE) | ✅ | ✅ |
